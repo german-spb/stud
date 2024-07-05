@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import NewStudentForm from "./NewStudentForm";
+import MultipleFileUploader from "./FileUploader"
 
 class NewStudentModal extends Component {
   state = {
@@ -16,10 +17,11 @@ class NewStudentModal extends Component {
   render() {
     const create = this.props.create;
 
-    var title = "Editing Student";
+    var title = "Редактирование";
     var button = <Button onClick={this.toggle}>Редактировать</Button>;
+        
     if (create) {
-      title = "Загрузить файл";
+      title = "Выбор и загрузка";
 
       button = (
         <Button
@@ -31,6 +33,17 @@ class NewStudentModal extends Component {
           Загрузить файл
         </Button>
       );
+      return (
+      <Fragment>
+        {button}
+        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
+          <ModalBody>
+            <MultipleFileUploader />
+          </ModalBody>
+        </Modal>
+      </Fragment>
+    );
     }
 
     return (
@@ -38,7 +51,6 @@ class NewStudentModal extends Component {
         {button}
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
-
           <ModalBody>
             <NewStudentForm
               resetState={this.props.resetState}
@@ -49,7 +61,9 @@ class NewStudentModal extends Component {
         </Modal>
       </Fragment>
     );
+    
   }
 }
 
 export default NewStudentModal;
+
